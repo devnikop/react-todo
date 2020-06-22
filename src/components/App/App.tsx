@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-
-import Tasks, { TaskTypeExt } from "../Tasks/Tasks";
-import { Group } from "../..";
+import React from "react";
 import styled from "styled-components";
+
+import { Group } from "../../data/tasks";
+
+import NewTask from "../NewTask/NewTask";
+import Tasks, { TaskTypeExt } from "../Tasks/Tasks";
 import { Color } from "../../styles/variables";
 
 type Props = {
@@ -39,6 +41,7 @@ const App: React.FC<Props> = ({ tasks }) => {
         <section>
           <h2>To Do</h2>
           <Tasks tasks={todoTasks} />
+          <NewTask />
         </section>
         <section>
           <h2>Doing</h2>

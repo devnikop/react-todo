@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Task, { TaskType } from "../Task/Task";
 import { resetList } from "../../styles/mixins";
-import { Group } from "../../index";
+import { Group } from "../../data/tasks";
 
 export interface TaskTypeExt extends TaskType {
   id: string;

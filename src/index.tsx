@@ -1,40 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { nanoid } from "nanoid";
 
-import App from "./components/App/App";
+import { tasks } from "./data/tasks";
 import * as serviceWorker from "./serviceWorker";
 import GlobalStyles from "./styles/global.css";
 
-export enum Group {
-  TODO = `TODO`,
-  DOING = `DOING`,
-  DONE = `DONE`,
-}
-
-const tasks = [
-  {
-    id: nanoid(),
-    title: `Task header`,
-    description: `Task description`,
-    deadline: `20:00`,
-    group: Group.TODO,
-  },
-  {
-    id: nanoid(),
-    title: `Task header`,
-    description: `Task description`,
-    deadline: `20:00`,
-    group: Group.DOING,
-  },
-  {
-    id: nanoid(),
-    title: `Task header`,
-    description: `Task description`,
-    deadline: `20:00`,
-    group: Group.DONE,
-  },
-];
+import App from "./components/App/App";
 
 ReactDOM.render(
   <React.StrictMode>
