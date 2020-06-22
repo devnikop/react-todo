@@ -1,33 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { FC, useState } from "react";
 
-type Props = {};
+import useEditStatus from "../../helpers/useEditStatus";
 
-const NewTask: React.FC<Props> = () => {
+const NewTask: FC = () => {
   const [isEdit, setIsEdit] = useState(false);
-  const inputRef = useRef<any>();
+  const inputRef = useEditStatus(isEdit, setIsEdit);
 
-  useEffect(() => {
-    const { current } = inputRef;
-
-    const handleInputBlur = () => setIsEdit(false);
-    const handleDocumentEscape = (e: KeyboardEvent) =>
-      e.code === `Escape` && setIsEdit(false);
-
-    current?.addEventListener(`blur`, handleInputBlur);
-    document.addEventListener(`keydown`, handleDocumentEscape);
-    current?.focus();
-
-    return () => {
-      current?.removeEventListener(`blur`, handleInputBlur);
-      document.removeEventListener(`keydown`, handleDocumentEscape);
-    };
-  }, [isEdit]);
-
-  const handleButtonClick = () => {
+  const handleButtonClick = (): void => {
     setIsEdit(true);
   };
 
-  return isEdit === true ? (
+  return isEdit ? (
     <input ref={inputRef} />
   ) : (
     <button onClick={handleButtonClick}>Add another task</button>
