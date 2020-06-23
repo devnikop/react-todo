@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Group } from "../../data/tasks";
-
 import NewTask from "../NewTask/NewTask";
-import Tasks, { TaskTypeExt } from "../Tasks/Tasks";
+import Tasks from "../Tasks/Tasks";
 import { Color } from "../../styles/variables";
 
-type Props = {
-  tasks: Array<TaskTypeExt>;
-};
+import {
+  useTodoTasks,
+  useDoingTasks,
+  useDoneTasks,
+} from "../../state/task/selectors";
 
 const TaskGroupWrapper = styled.div`
   display: grid;
@@ -29,10 +29,10 @@ const TaskGroupWrapper = styled.div`
   }
 `;
 
-const App: React.FC<Props> = ({ tasks }) => {
-  const todoTasks = tasks.filter((task) => task.group === Group.TODO);
-  const doingTasks = tasks.filter((task) => task.group === Group.DOING);
-  const doneTasks = tasks.filter((task) => task.group === Group.DONE);
+const App: React.FC = () => {
+  const todoTasks = useTodoTasks();
+  const doingTasks = useDoingTasks();
+  const doneTasks = useDoneTasks();
 
   return (
     <>

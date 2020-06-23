@@ -1,14 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import Task, { TaskType } from "../Task/Task";
+import Task from "../Task/Task";
 import { resetList } from "../../styles/mixins";
-import { Group } from "../../data/tasks";
-
-export interface TaskTypeExt extends TaskType {
-  id: string;
-  group: Group;
-}
+import { TaskTypeExt } from "../../state/task";
 
 type Props = {
   tasks: Array<TaskTypeExt>;
@@ -16,6 +11,11 @@ type Props = {
 
 const StyledTasks = styled.ul`
   ${resetList()}
+
+  display: grid;
+  gap: 20px;
+
+  margin-bottom: 20px;
 `;
 
 const Tasks: React.FC<Props> = ({ tasks }) => {

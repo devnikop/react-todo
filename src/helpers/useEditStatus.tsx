@@ -1,29 +1,25 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useEffect } from "react";
 
-type Hook = (
-  isEdit: React.ComponentState,
-  setIsEdit: (newValue: boolean) => void
-) => React.Ref<HTMLInputElement>;
+type HookProps = {
+  isEdit: React.ComponentState;
+  setIsEdit: (newValue: boolean) => void;
+};
 
-const useEditStatus: Hook = (isEdit, setIsEdit) => {
+const useEditStatus = ({
+  isEdit,
+  setIsEdit,
+}: HookProps): React.Ref<HTMLInputElement> => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  useLayoutEffect(() => {
-    const { current: inputEl } = inputRef;
-
-    const handleInputBlur = (): void => {
-      setIsEdit(false);
-    };
+  useEffect(() => {
     const handleDocumentEscape = (e: KeyboardEvent): void => {
       e.code === `Escape` && setIsEdit(false);
     };
 
+    inputRef.current?.focus();
     document.addEventListener(`keydown`, handleDocumentEscape);
-    inputEl?.addEventListener(`blur`, handleInputBlur);
-    inputEl?.focus();
 
     return () => {
       document.removeEventListener(`keydown`, handleDocumentEscape);
-      inputEl?.removeEventListener(`blur`, handleInputBlur);
     };
   }, [isEdit, setIsEdit]);
 

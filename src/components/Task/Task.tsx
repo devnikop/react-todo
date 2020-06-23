@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export interface TaskType {
-  title: string;
-  description: string;
-  deadline: string;
-}
+import { TaskType } from "../../state/task";
 
 type Props = TaskType;
 

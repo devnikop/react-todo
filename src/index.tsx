@@ -1,16 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 
-import { tasks } from "./data/tasks";
 import * as serviceWorker from "./serviceWorker";
 import GlobalStyles from "./styles/global.css";
+import store from "./state/configureStore";
 
 import App from "./components/App/App";
 
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyles />
-    <App tasks={tasks} />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
