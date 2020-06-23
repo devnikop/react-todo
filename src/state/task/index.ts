@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import moment from "moment";
 
 export enum Group {
   TODO = `TODO`,
@@ -21,27 +22,33 @@ export type IState = {
   tasks: Array<TaskTypeExt>;
 };
 
+export const getRandomDeadline = (): string =>
+  moment()
+    .add(Math.round(Math.random() * 7), `d`)
+    .subtract(2, `d`)
+    .format(`D MMM`);
+
 const initialState: IState = {
   tasks: [
     {
       id: nanoid(),
       title: `Task header`,
       description: `Task description`,
-      deadline: `20:00`,
+      deadline: getRandomDeadline(),
       group: Group.TODO,
     },
     {
       id: nanoid(),
       title: `Task header`,
       description: `Task description`,
-      deadline: `20:00`,
+      deadline: getRandomDeadline(),
       group: Group.DOING,
     },
     {
       id: nanoid(),
       title: `Task header`,
       description: `Task description`,
-      deadline: `20:00`,
+      deadline: getRandomDeadline(),
       group: Group.DONE,
     },
   ],

@@ -1,14 +1,40 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import { TaskType } from "../../state/task";
+import { Color } from "../../styles/variables";
 
-type Props = TaskType;
+const getTaskBackgroundColor = (deadline: string): string => {
+  if (moment(deadline, `D MMM`).isBefore(moment())) {
+    return Color.overdue;
+  }
+  if (moment(deadline, `D MMM`).isBefore(moment().add(3, `d`))) {
+    return Color.warning;
+  }
 
-const StyledTask = styled.article`
+  return Color.deadlineOk;
+};
+
+const Task: React.FC<TaskType & { className?: string }> = ({
+  className,
+  title,
+  description,
+  deadline,
+}) => {
+  return (
+    <article className={className}>
+      <h3>{title}</h3>
+      <p>{description}</p>
+      <time dateTime={deadline}>{deadline}</time>
+    </article>
+  );
+};
+
+const StyledTask = styled(Task)`
   padding: 10px;
 
-  background-color: #ffffff;
+  background-color: ${({ deadline }) => getTaskBackgroundColor(deadline)};
   border-radius: 3px;
 
   h3 {
@@ -22,14 +48,4 @@ const StyledTask = styled.article`
   }
 `;
 
-const Task: React.FC<Props> = ({ title, description, deadline }) => {
-  return (
-    <StyledTask>
-      <h3>{title}</h3>
-      <p>{description}</p>
-      <time dateTime={deadline}>{deadline}</time>
-    </StyledTask>
-  );
-};
-
-export default Task;
+export default StyledTask;

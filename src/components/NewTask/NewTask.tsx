@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
 
 import useEditStatus from "../../helpers/useEditStatus";
-import { ActionCreators, Group } from "../../state/task";
+import { ActionCreators, Group, getRandomDeadline } from "../../state/task";
 
 const NewTask: FC = () => {
   const dispatch = useDispatch();
@@ -11,6 +11,24 @@ const NewTask: FC = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [taskTitle, setTaskTitle] = useState(``);
   const inputRef = useEditStatus({ isEdit, setIsEdit });
+
+  const addNewTask = () => {
+    dispatch(
+      ActionCreators.addTask({
+        id: nanoid(),
+        title: taskTitle,
+        description: ``,
+        deadline: getRandomDeadline(),
+        group: Group.TODO,
+      })
+    );
+    setTaskTitle(``);
+  };
+
+  const handleFormSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    taskTitle && addNewTask();
+  };
 
   const handleTaskTitleInput = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -21,16 +39,7 @@ const NewTask: FC = () => {
   const handleInputBlur = (): void => {
     setIsEdit(false);
 
-    taskTitle &&
-      dispatch(
-        ActionCreators.addTask({
-          id: nanoid(),
-          title: taskTitle,
-          description: `Task description`,
-          deadline: `14:00`,
-          group: Group.TODO,
-        })
-      );
+    taskTitle && addNewTask();
   };
 
   const handleButtonClick = (): void => {
@@ -38,12 +47,14 @@ const NewTask: FC = () => {
   };
 
   return isEdit ? (
-    <input
-      ref={inputRef}
-      value={taskTitle}
-      onBlur={handleInputBlur}
-      onChange={handleTaskTitleInput}
-    />
+    <form onSubmit={handleFormSubmit}>
+      <input
+        ref={inputRef}
+        value={taskTitle}
+        onBlur={handleInputBlur}
+        onChange={handleTaskTitleInput}
+      />
+    </form>
   ) : (
     <button onClick={handleButtonClick}>Add another task</button>
   );

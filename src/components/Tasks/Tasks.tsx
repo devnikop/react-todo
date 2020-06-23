@@ -9,18 +9,12 @@ type Props = {
   tasks: Array<TaskTypeExt>;
 };
 
-const StyledTasks = styled.ul`
-  ${resetList()}
-
-  display: grid;
-  gap: 20px;
-
-  margin-bottom: 20px;
-`;
-
-const Tasks: React.FC<Props> = ({ tasks }) => {
+const Tasks: React.FC<Props & { className?: string }> = ({
+  className,
+  tasks,
+}) => {
   return (
-    <StyledTasks>
+    <ul className={className}>
       {tasks.map((task) => (
         <li key={task.id}>
           <Task
@@ -30,8 +24,17 @@ const Tasks: React.FC<Props> = ({ tasks }) => {
           />
         </li>
       ))}
-    </StyledTasks>
+    </ul>
   );
 };
 
-export default Tasks;
+const StyledTasks = styled(Tasks)`
+  ${resetList()}
+
+  display: grid;
+  gap: 20px;
+
+  margin-bottom: 20px;
+`;
+
+export default StyledTasks;
