@@ -1,20 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector, shallowEqual } from "react-redux";
 
 import NewTask from "../NewTask/NewTask";
 import Tasks from "../Tasks/Tasks";
 import { Color } from "../../styles/variables";
 
 import {
-  useTodoTasks,
-  useDoingTasks,
-  useDoneTasks,
+  getTodoTasks,
+  getDoingTasks,
+  getDoneTasks,
 } from "../../state/task/selectors";
 
 const TaskGroupWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(100px, 300px));
   gap: 5%;
+  align-items: start;
 
   section {
     padding: 15px;
@@ -30,9 +32,9 @@ const TaskGroupWrapper = styled.div`
 `;
 
 const App: React.FC = () => {
-  const todoTasks = useTodoTasks();
-  const doingTasks = useDoingTasks();
-  const doneTasks = useDoneTasks();
+  const todoTasks = useSelector(getTodoTasks, shallowEqual);
+  const doingTasks = useSelector(getDoingTasks, shallowEqual);
+  const doneTasks = useSelector(getDoneTasks, shallowEqual);
 
   return (
     <>
