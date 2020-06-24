@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import moment from "moment";
+import { ADD_TASK, DELETE_TASK } from "./types";
 
 export enum Group {
   TODO = `TODO`,
@@ -9,11 +10,16 @@ export enum Group {
 
 export interface TaskType {
   deadline: string;
+  title: string;
+}
+
+export interface TaskEditType {
+  deadline: string;
   description: string;
   title: string;
 }
 
-export interface TaskTypeExt extends TaskType {
+export interface TaskTypeExt extends TaskEditType {
   group: Group;
   id: string;
 }
@@ -56,8 +62,12 @@ const initialState: IState = {
 
 const ActionCreators = {
   addTask: (task: TaskTypeExt) => ({
-    type: `ADD_TASK`,
+    type: ADD_TASK,
     payload: task,
+  }),
+  deleteTask: (id: string) => ({
+    type: DELETE_TASK,
+    payload: id,
   }),
 };
 
@@ -66,10 +76,15 @@ const reducer = (
   action: { type: string; payload: any }
 ) => {
   switch (action.type) {
-    case `ADD_TASK`:
+    case ADD_TASK:
       return {
         ...state,
         tasks: state.tasks.concat(action.payload),
+      };
+    case DELETE_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.filter((task) => task.id !== action.payload),
       };
     default:
       return state;

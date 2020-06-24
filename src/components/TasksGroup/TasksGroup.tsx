@@ -1,5 +1,8 @@
 import { useSelector, shallowEqual } from "react-redux";
 import React from "react";
+import styled from "styled-components";
+
+import { Color } from "../../styles/variables";
 
 import Tasks from "../Tasks/Tasks";
 import NewTask from "../NewTask/NewTask";
@@ -24,16 +27,26 @@ const TypeMap = new Map([
 const getTasksSelector = (type: string): typeof getDefaultTasks =>
   TypeMap.get(type) || getDefaultTasks;
 
-const TasksGroup: React.FC<Props> = ({ type }) => {
+const TasksGroup: React.FC<Props & { className?: string }> = ({
+  className,
+  type,
+}) => {
   const tasks = useSelector(getTasksSelector(type), shallowEqual);
 
   return (
-    <section>
+    <section className={className}>
       <h2 className="visually-hidden">{type} group</h2>
-      <Tasks tasks={tasks} />
+      {tasks.length ? <Tasks tasks={tasks} /> : ``}
       <NewTask />
     </section>
   );
 };
 
-export default TasksGroup;
+const styledTasksGroup = styled(TasksGroup)`
+  padding: 25px 15px;
+
+  background-color: ${Color.grey1};
+  border-radius: 0 0 5px 5px;
+`;
+
+export default styledTasksGroup;

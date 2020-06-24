@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Task from "../Task/Task";
+import TaskWrapper from "../TaskWrapper/TaskWrapper";
 import { resetList } from "../../styles/mixins";
 import { TaskTypeExt } from "../../state/task";
 
@@ -17,11 +17,7 @@ const Tasks: React.FC<Props & { className?: string }> = ({
     <ul className={className}>
       {tasks.map((task) => (
         <li key={task.id}>
-          <Task
-            title={task.title}
-            description={task.description}
-            deadline={task.deadline}
-          />
+          <TaskWrapper task={task} />
         </li>
       ))}
     </ul>
@@ -33,7 +29,6 @@ const StyledTasks = styled(Tasks)`
 
   display: grid;
   gap: 20px;
-
   margin-bottom: 20px;
 `;
 

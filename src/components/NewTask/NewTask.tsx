@@ -56,7 +56,9 @@ const NewTask: FC = () => {
       />
     </form>
   ) : (
-    <button onClick={handleButtonClick}>Add another task</button>
+    <button type="button" onClick={handleButtonClick}>
+      Add another task
+    </button>
   );
 };
 

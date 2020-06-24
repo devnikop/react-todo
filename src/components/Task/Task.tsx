@@ -4,34 +4,33 @@ import moment from "moment";
 
 import { TaskType } from "../../state/task";
 import { Color } from "../../styles/variables";
+import { getTaskBackgroundColor } from "../../helpers/helpers";
 
-const getTaskBackgroundColor = (deadline: string): string => {
-  if (moment(deadline, `D MMM`).isBefore(moment())) {
-    return Color.overdue;
-  }
-  if (moment(deadline, `D MMM`).isBefore(moment().add(3, `d`))) {
-    return Color.warning;
-  }
+interface Props extends TaskType {
+  onClick: () => void;
+}
 
-  return Color.deadlineOk;
-};
-
-const Task: React.FC<TaskType & { className?: string }> = ({
+const Task: React.FC<Props & { className?: string }> = ({
   className,
-  title,
-  description,
   deadline,
+  title,
+  onClick,
 }) => {
   return (
-    <article className={className}>
+    <section className={className} onClick={onClick}>
       <h3>{title}</h3>
-      <p>{description}</p>
-      <time dateTime={deadline}>{deadline}</time>
-    </article>
+      <time dateTime={moment(deadline, `D MMM`).format(`YYYY-M-D`)}>
+        {deadline}
+      </time>
+    </section>
   );
 };
 
 const StyledTask = styled(Task)`
+  display: grid;
+  grid-auto-flow: column;
+  gap: 5%;
+  justify-content: space-between;
   padding: 10px;
 
   background-color: ${({ deadline }) => getTaskBackgroundColor(deadline)};
@@ -40,12 +39,8 @@ const StyledTask = styled(Task)`
 
   h3 {
     margin: 0;
-    margin-bottom: 20px;
-  }
 
-  p {
-    margin: 0;
-    margin-bottom: 10px;
+    overflow-wrap: anywhere;
   }
 `;
 
