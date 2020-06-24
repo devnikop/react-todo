@@ -1,16 +1,18 @@
 import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
+import styled from "styled-components";
 
-import useEditStatus from "../../helpers/useEditStatus";
+import { useInputEditStatus } from "../../helpers/useEditStatus";
 import { ActionCreators, Group, getRandomDeadline } from "../../state/task";
+import { getDefaultInput } from "../../styles/mixins";
 
 const NewTask: FC = () => {
   const dispatch = useDispatch();
 
   const [isEdit, setIsEdit] = useState(false);
   const [taskTitle, setTaskTitle] = useState(``);
-  const inputRef = useEditStatus({ isEdit, setIsEdit });
+  const inputRef = useInputEditStatus({ isEdit, setIsEdit });
 
   const addNewTask = () => {
     dispatch(
@@ -48,16 +50,23 @@ const NewTask: FC = () => {
 
   return isEdit ? (
     <form onSubmit={handleFormSubmit}>
-      <input
+      <Input
         ref={inputRef}
         value={taskTitle}
+        placeholder="Add task title"
         onBlur={handleInputBlur}
         onChange={handleTaskTitleInput}
       />
     </form>
   ) : (
-    <button onClick={handleButtonClick}>Add another task</button>
+    <button type="button" onClick={handleButtonClick}>
+      Add another task
+    </button>
   );
 };
+
+const Input = styled.input`
+  ${getDefaultInput()}
+`;
 
 export default NewTask;
