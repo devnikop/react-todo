@@ -36,6 +36,7 @@ const StyledTask = styled(Task)`
 
   background-color: ${({ deadline }) => getTaskBackgroundColor(deadline)};
   border-radius: 3px;
+  box-shadow: 0 1px 0 ${Color.blueShadow1};
 
   h3 {
     margin: 0;

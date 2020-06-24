@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { Color } from "./variables";
 
 export default createGlobalStyle`
   body {
@@ -10,10 +11,19 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    background-color: #519839;
+    background-color: ${Color.green1};
   }
 
   a {
     text-decoration: none;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap; /* added line */
   }
 `;

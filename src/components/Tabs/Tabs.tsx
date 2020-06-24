@@ -7,17 +7,20 @@ import { Color } from "../../styles/variables";
 
 const Tabs: React.FC<{ className?: string }> = ({ className }) => {
   return (
-    <ul className={className}>
-      <li>
-        <StyledNavLink to="/todo">To do</StyledNavLink>
-      </li>
-      <li>
-        <StyledNavLink to="/doing">Doing</StyledNavLink>
-      </li>
-      <li>
-        <StyledNavLink to="/done">Done</StyledNavLink>
-      </li>
-    </ul>
+    <section className={className}>
+      <h2 className="visually-hidden">Task groups</h2>
+      <ul>
+        <li>
+          <StyledNavLink to="/todo">To do</StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/doing">Doing</StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/done">Done</StyledNavLink>
+        </li>
+      </ul>
+    </section>
   );
 };
 
@@ -28,6 +31,7 @@ const StyledNavLink = styled(NavLink)`
   font-size: 20px;
   font-weight: bold;
   color: inherit;
+  background-color: ${Color.blue2};
 
   transition: background-color 200ms;
 
@@ -42,24 +46,28 @@ const StyledNavLink = styled(NavLink)`
   }
 
   &.active {
-    background-color: ${Color.grey1};
+    background-color: ${Color.blue1};
     pointer-events: none;
+    box-shadow: inset 0 1px 0 ${Color.blueShadow1};
 
     &:focus {
-      background-color: ${Color.grey1};
+      background-color: ${Color.blue1};
     }
   }
 `;
 
 const StyledTabs = styled(Tabs)`
-  ${resetList()}
+  ul {
+    ${resetList()}
 
-  display: grid;
-  grid-template-columns: repeat(3, max-content);
+    display: flex;
+    flex-wrap: wrap;
+    width: fit-content;
+  }
 
-  width: fit-content;
-
-  background-color: ${Color.blue1};
+  li {
+    flex-shrink: 0;
+  }
 `;
 
 export default StyledTabs;
