@@ -5,17 +5,17 @@ type HookProps = {
   setIsEdit: (newValue: boolean) => void;
 };
 
-const useEditStatus = ({
+const useInputEditStatus = ({
   isEdit,
   setIsEdit,
 }: HookProps): React.Ref<HTMLInputElement> => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const ref = useRef<HTMLInputElement | null>(null);
   useEffect(() => {
     const handleDocumentEscape = (e: KeyboardEvent): void => {
       e.code === `Escape` && setIsEdit(false);
     };
 
-    inputRef.current?.focus();
+    ref.current?.focus();
     document.addEventListener(`keydown`, handleDocumentEscape);
 
     return () => {
@@ -23,7 +23,28 @@ const useEditStatus = ({
     };
   }, [isEdit, setIsEdit]);
 
-  return inputRef;
+  return ref;
 };
 
-export default useEditStatus;
+const useTextareaEditStatus = ({
+  isEdit,
+  setIsEdit,
+}: HookProps): React.Ref<HTMLTextAreaElement> => {
+  const ref = useRef<HTMLTextAreaElement | null>(null);
+  useEffect(() => {
+    const handleDocumentEscape = (e: KeyboardEvent): void => {
+      e.code === `Escape` && setIsEdit(false);
+    };
+
+    ref.current?.focus();
+    document.addEventListener(`keydown`, handleDocumentEscape);
+
+    return () => {
+      document.removeEventListener(`keydown`, handleDocumentEscape);
+    };
+  }, [isEdit, setIsEdit]);
+
+  return ref;
+};
+
+export { useInputEditStatus, useTextareaEditStatus };

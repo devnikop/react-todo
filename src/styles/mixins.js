@@ -15,4 +15,31 @@ const resetList = () => `
   list-style: none;
 `;
 
-export { resetButton, resetList };
+const resetInput = () => `
+  padding: 0;
+
+  border: none;
+  background: none;
+`;
+
+const resetTextarea = () => `
+  padding: 0;
+
+  border: none;
+  background: none;
+
+  resize: none;
+`;
+
+const getDefaultInput = () => `
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+export {
+  resetButton,
+  resetList,
+  resetInput,
+  resetTextarea,
+  getDefaultInput,
+};
