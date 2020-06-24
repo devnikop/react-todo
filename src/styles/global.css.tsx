@@ -12,4 +12,8 @@ export default createGlobalStyle`
 
     background-color: #519839;
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
