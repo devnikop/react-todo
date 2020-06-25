@@ -13,4 +13,10 @@ const getTaskBackgroundColor = (deadline: string): string => {
   return Color.deadlineOk;
 };
 
-export { getTaskBackgroundColor };
+const getRandomDeadline = (): string =>
+  moment()
+    .add(Math.round(Math.random() * 7), `d`)
+    .subtract(2, `d`)
+    .format(`D MMM`);
+
+export { getTaskBackgroundColor, getRandomDeadline };

@@ -1,8 +1,7 @@
 import { createSelector } from "reselect";
 
-import { Group } from "../../state/task/index";
+import { Group, TaskTypeExt } from "../../state/task/index";
 import { RootState } from "../../state/reducers";
-import { TaskTypeExt } from "../../state/task/index";
 
 type AllTasks = (state: RootState) => Array<TaskTypeExt>;
 

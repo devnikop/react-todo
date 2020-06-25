@@ -1,6 +1,7 @@
+import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
-import moment from "moment";
-import { ADD_TASK, DELETE_TASK } from "./types";
+
+import { getRandomDeadline } from "../../helpers/helpers";
 
 export enum Group {
   DOING = `DOING`,
@@ -27,12 +28,6 @@ export interface TaskTypeExt extends TaskEditType {
 export type IState = {
   tasks: Array<TaskTypeExt>;
 };
-
-export const getRandomDeadline = (): string =>
-  moment()
-    .add(Math.round(Math.random() * 7), `d`)
-    .subtract(2, `d`)
-    .format(`D MMM`);
 
 const initialState: IState = {
   tasks: [
@@ -109,35 +104,31 @@ const initialState: IState = {
   ],
 };
 
-const ActionCreators = {
-  addTask: (task: TaskTypeExt) => ({
-    type: ADD_TASK,
-    payload: task,
-  }),
-  deleteTask: (id: string) => ({
-    type: DELETE_TASK,
-    payload: id,
-  }),
+type State = {
+  tasks: TaskTypeExt[];
 };
 
-const reducer = (
-  state = initialState,
-  action: { type: string; payload: any }
-) => {
-  switch (action.type) {
-    case ADD_TASK:
-      return {
-        ...state,
-        tasks: state.tasks.concat(action.payload),
-      };
-    case DELETE_TASK:
-      return {
-        ...state,
-        tasks: state.tasks.filter((task) => task.id !== action.payload),
-      };
-    default:
-      return state;
-  }
-};
+const addTask: CaseReducer<State, PayloadAction<TaskTypeExt>> = (
+  state,
+  action
+) => ({
+  ...state,
+  tasks: state.tasks.concat(action.payload),
+});
 
-export { ActionCreators, reducer };
+const deleteTask: CaseReducer<State, PayloadAction<string>> = (
+  state,
+  action
+) => ({
+  ...state,
+  tasks: state.tasks.filter((task) => task.id !== action.payload),
+});
+
+export const tasks = createSlice({
+  name: "tasks",
+  initialState,
+  reducers: {
+    addTask,
+    deleteTask,
+  },
+});

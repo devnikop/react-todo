@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 
-import { ActionCreators, TaskTypeExt } from "../../state/task";
+import { tasks, TaskTypeExt } from "../../state/task";
 
 import Task from "../Task/Task";
 import TaskEdit from "../TaskEdit/TaskEdit";
@@ -15,7 +15,7 @@ const TaskWrapper: React.FC<Props> = ({ task }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const handleDeleteClick = (): void => {
-    dispatch(ActionCreators.deleteTask(task.id));
+    dispatch(tasks.actions.deleteTask(task.id));
   };
 
   const handleLeaveClick = (): void => {
