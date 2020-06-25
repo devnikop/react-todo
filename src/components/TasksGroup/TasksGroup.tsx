@@ -1,4 +1,4 @@
-import { useSelector, shallowEqual } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import React from "react";
 import styled from "styled-components";
 
@@ -19,9 +19,9 @@ type Props = {
 };
 
 const TypeMap = new Map([
-  [`todo`, getTodoTasks],
   [`doing`, getDoingTasks],
   [`done`, getDoneTasks],
+  [`todo`, getTodoTasks],
 ]);
 
 const getTasksSelector = (type: string): typeof getDefaultTasks =>

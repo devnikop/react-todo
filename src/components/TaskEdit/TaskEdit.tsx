@@ -4,115 +4,48 @@ import styled from "styled-components";
 import { getTaskBackgroundColor } from "../../helpers/helpers";
 import { Color } from "../../styles/variables";
 import { TaskEditType } from "../../state/task";
-import {
-  useTextareaEditStatus,
-  useInputEditStatus,
-} from "../../helpers/useEditStatus";
-import {
-  resetInput,
-  resetTextarea,
-  getDefaultInput,
-} from "../../styles/mixins";
+
+import InputDate from "./InputDate";
+import InputTitle from "./InputTitle";
+import TextareaDescription from "./TextareaDescription";
 
 interface Props extends TaskEditType {
-  onLeaveClick: () => void;
   onDeleteClick: () => void;
+  onLeaveClick: () => void;
 }
 
 const TaskEdit: React.FC<Props & { className?: string }> = ({
   className,
-  title: taskTitle,
-  description: taskDescription,
   deadline,
-  onLeaveClick,
+  description: taskDescription,
+  title: taskTitle,
   onDeleteClick,
+  onLeaveClick,
 }) => {
-  const [title, setTitle] = useState<string>(taskTitle);
-  const [isEditTitle, setIsEditTitle] = useState<boolean>(!title);
+  const [date, setDate] = useState<string>(deadline);
   const [description, setDescription] = useState<string>(taskDescription);
-  const [isEditDescription, setIsEditDescription] = useState<boolean>(
-    !taskDescription
-  );
+  const [title, setTitle] = useState<string>(taskTitle);
 
-  const titleRef = useInputEditStatus({
-    isEdit: isEditTitle,
-    setIsEdit: setIsEditTitle,
-  });
-  const descriptionRef = useTextareaEditStatus({
-    isEdit: isEditDescription,
-    setIsEdit: setIsEditDescription,
-  });
-
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setTitle(e.target.value);
+  const handleTitleChange = (newValue: string): void => {
+    setTitle(newValue);
   };
 
-  const handleTitleBlur = () => {
-    setIsEditTitle(false);
+  const handleDateChange = (newValue: string): void => {
+    setDate(newValue);
   };
 
-  const handleTitleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.key === `Enter` && setIsEditTitle(false);
-  };
-
-  const handleTitleClick = (): void => {
-    setIsEditTitle(true);
-  };
-
-  const handleDescriptionClick = () => {
-    setIsEditDescription(true);
-  };
-
-  const handleDesriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ): void => {
-    setDescription(e.target.value);
-  };
-
-  const handleDescriptionEnter = (
-    e: React.KeyboardEvent<HTMLTextAreaElement>
-  ): void => {
-    e.key === `Enter` && setIsEditDescription(false);
-  };
-
-  const handleDescriptionBlur = (): void => {
-    setIsEditDescription(false);
+  const handleDescriptionChange = (newValue: string): void => {
+    setDescription(newValue);
   };
 
   return (
     <section className={className}>
-      {isEditTitle ? (
-        <TitleEdit
-          ref={titleRef}
-          value={title}
-          onChange={handleTitleChange}
-          onBlur={handleTitleBlur}
-          onKeyDown={handleTitleEnter}
-        />
-      ) : (
-        <TitlePresentation
-          defaultValue={title}
-          placeholder="Add task title"
-          onClick={handleTitleClick}
-        />
-      )}
-      <time dateTime={deadline}>{deadline}</time>
-      {isEditDescription ? (
-        <DescriptionEdit
-          ref={descriptionRef}
-          value={description}
-          placeholder="Add a more detailed description..."
-          onChange={handleDesriptionChange}
-          onBlur={handleDescriptionBlur}
-          onKeyDown={handleDescriptionEnter}
-        />
-      ) : (
-        <DescriptionPresentation
-          defaultValue={description}
-          placeholder="Add a more detailed description..."
-          onClick={handleDescriptionClick}
-        />
-      )}
+      <InputTitle value={title} onValueChange={handleTitleChange} />
+      <InputDate value={date} onValueChange={handleDateChange} />
+      <TextareaDescription
+        value={description}
+        onValueChange={handleDescriptionChange}
+      />
       <button type="button" onClick={onLeaveClick}>
         Leave Edit mode
       </button>
@@ -123,23 +56,6 @@ const TaskEdit: React.FC<Props & { className?: string }> = ({
   );
 };
 
-const TitleEdit = styled.input`
-  ${getDefaultInput()}
-`;
-
-const TitlePresentation = styled.input`
-  ${resetInput()}
-  ${getDefaultInput()}
-`;
-
-const DescriptionEdit = styled.textarea`
-  resize: vertical;
-`;
-
-const DescriptionPresentation = styled.textarea`
-  ${resetTextarea()}
-`;
-
 const StyledTaskEdit = styled(TaskEdit)`
   display: grid;
   gap: 10px;
@@ -148,10 +64,6 @@ const StyledTaskEdit = styled(TaskEdit)`
   background-color: ${({ deadline }) => getTaskBackgroundColor(deadline)};
   border-radius: 3px;
   box-shadow: 0 1px 0 ${Color.blueShadow1};
-
-  time {
-    padding: 5px 0;
-  }
 `;
 
 export default StyledTaskEdit;

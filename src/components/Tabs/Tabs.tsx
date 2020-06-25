@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom";
 import React from "react";
 import styled from "styled-components";
 
-import { resetList } from "../../styles/mixins";
 import { Color } from "../../styles/variables";
+import { resetList } from "../../styles/mixins";
 
 const Tabs: React.FC<{ className?: string }> = ({ className }) => {
   return (

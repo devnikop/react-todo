@@ -1,10 +1,10 @@
+import moment from "moment";
 import React from "react";
 import styled from "styled-components";
-import moment from "moment";
 
-import { TaskType } from "../../state/task";
 import { Color } from "../../styles/variables";
 import { getTaskBackgroundColor } from "../../helpers/helpers";
+import { TaskType } from "../../state/task";
 
 interface Props extends TaskType {
   onClick: () => void;
