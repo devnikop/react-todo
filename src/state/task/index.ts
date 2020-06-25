@@ -3,9 +3,9 @@ import moment from "moment";
 import { ADD_TASK, DELETE_TASK } from "./types";
 
 export enum Group {
-  TODO = `TODO`,
   DOING = `DOING`,
   DONE = `DONE`,
+  TODO = `TODO`,
 }
 
 export interface TaskType {
@@ -38,24 +38,73 @@ const initialState: IState = {
   tasks: [
     {
       id: nanoid(),
-      title: `Task header`,
-      description: `Task description`,
       deadline: getRandomDeadline(),
+      description: `This is todo task description`,
       group: Group.TODO,
+      title: `Todo task header`,
     },
     {
       id: nanoid(),
-      title: `Task header`,
-      description: `Task description`,
       deadline: getRandomDeadline(),
+      description: `This is todo task description`,
+      group: Group.TODO,
+      title: `Todo task 2 header`,
+    },
+    {
+      id: nanoid(),
+      deadline: getRandomDeadline(),
+      description: `This is todo task description`,
+      group: Group.TODO,
+      title: `Todo task 3 header`,
+    },
+    {
+      id: nanoid(),
+      deadline: getRandomDeadline(),
+      description: `This is todo task description`,
+      group: Group.TODO,
+      title: `Todo task 4 header`,
+    },
+    {
+      id: nanoid(),
+      deadline: getRandomDeadline(),
+      description: `This is todo task description`,
       group: Group.DOING,
+      title: `Doing task header`,
     },
     {
       id: nanoid(),
-      title: `Task header`,
-      description: `Task description`,
       deadline: getRandomDeadline(),
+      description: `This is todo task description`,
+      group: Group.DOING,
+      title: `Doing task2 header`,
+    },
+    {
+      id: nanoid(),
+      deadline: getRandomDeadline(),
+      description: `This is todo task description`,
+      group: Group.DOING,
+      title: `Doing task 3 header`,
+    },
+    {
+      id: nanoid(),
+      deadline: getRandomDeadline(),
+      description: `This is todo task description`,
       group: Group.DONE,
+      title: `Done task header`,
+    },
+    {
+      id: nanoid(),
+      deadline: getRandomDeadline(),
+      description: `This is todo task description`,
+      group: Group.DONE,
+      title: `Done task 2 header`,
+    },
+    {
+      id: nanoid(),
+      deadline: getRandomDeadline(),
+      description: `This is todo task description`,
+      group: Group.DONE,
+      title: `Done task 3 header`,
     },
   ],
 };

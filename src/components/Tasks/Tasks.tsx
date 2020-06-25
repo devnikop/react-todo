@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-import TaskWrapper from "../TaskWrapper/TaskWrapper";
 import { resetList } from "../../styles/mixins";
 import { TaskTypeExt } from "../../state/task";
+
+import TaskWrapper from "../TaskWrapper/TaskWrapper";
 
 type Props = {
   tasks: Array<TaskTypeExt>;

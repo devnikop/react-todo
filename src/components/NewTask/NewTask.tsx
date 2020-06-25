@@ -1,11 +1,11 @@
-import React, { FC, useState } from "react";
-import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
+import { useDispatch } from "react-redux";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
 
-import { useInputEditStatus } from "../../helpers/useEditStatus";
-import { ActionCreators, Group, getRandomDeadline } from "../../state/task";
+import { ActionCreators, getRandomDeadline, Group } from "../../state/task";
 import { getDefaultInput } from "../../styles/mixins";
+import { useInputEditStatus } from "../../helpers/useEditStatus";
 
 const NewTask: FC = () => {
   const dispatch = useDispatch();
@@ -14,21 +14,27 @@ const NewTask: FC = () => {
   const [taskTitle, setTaskTitle] = useState(``);
   const inputRef = useInputEditStatus({ isEdit, setIsEdit });
 
-  const addNewTask = () => {
+  const addNewTask = (): void => {
     dispatch(
       ActionCreators.addTask({
         id: nanoid(),
-        title: taskTitle,
-        description: ``,
         deadline: getRandomDeadline(),
+        description: ``,
         group: Group.TODO,
+        title: taskTitle,
       })
     );
     setTaskTitle(``);
   };
 
-  const handleFormSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (e: React.SyntheticEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    taskTitle && addNewTask();
+  };
+
+  const handleInputBlur = (): void => {
+    setIsEdit(false);
+
     taskTitle && addNewTask();
   };
 
@@ -36,12 +42,6 @@ const NewTask: FC = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
     setTaskTitle(e.target.value);
-  };
-
-  const handleInputBlur = (): void => {
-    setIsEdit(false);
-
-    taskTitle && addNewTask();
   };
 
   const handleButtonClick = (): void => {

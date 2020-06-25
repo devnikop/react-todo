@@ -1,3 +1,8 @@
+const getDefaultInput = () => `
+  font-size: 20px;
+  font-weight: 600;
+`;
+
 const resetButton = () => `
   padding: 0;
 
@@ -9,17 +14,17 @@ const resetButton = () => `
   cursor: pointer;
 `;
 
-const resetList = () => `
-  margin: 0;
-  padding: 0;
-  list-style: none;
-`;
-
 const resetInput = () => `
   padding: 0;
 
   border: none;
   background: none;
+`;
+
+const resetList = () => `
+  margin: 0;
+  padding: 0;
+  list-style: none;
 `;
 
 const resetTextarea = () => `
@@ -31,15 +36,4 @@ const resetTextarea = () => `
   resize: none;
 `;
 
-const getDefaultInput = () => `
-  font-size: 20px;
-  font-weight: 600;
-`;
-
-export {
-  resetButton,
-  resetList,
-  resetInput,
-  resetTextarea,
-  getDefaultInput,
-};
+export { getDefaultInput, resetButton, resetInput, resetList, resetTextarea };
