@@ -26,7 +26,7 @@ const TaskWrapper: React.FC<Props> = ({ task }) => {
     dispatch(ActionCreators.deleteTask(task.id));
   };
 
-  return isEdit ? (
+  return !isEdit ? (
     <TaskEdit
       deadline={task.deadline}
       description={task.description}
