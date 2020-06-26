@@ -37,6 +37,8 @@ const StyledTask = styled(Task)`
   border-radius: 3px;
   box-shadow: 0 1px 0 ${Color.blueShadow1};
 
+  cursor: pointer;
+
   h3 {
     margin: 0;
 
