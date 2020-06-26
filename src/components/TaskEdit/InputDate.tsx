@@ -1,16 +1,22 @@
 import moment from "moment";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { useInputEditStatus } from "../../helpers/useEditStatus";
 
 type Props = {
   value: string;
+  isEdit: boolean;
+  setIsEdit: (newValue: boolean) => void;
   onValueChange: (newValue: string) => void;
 };
 
-const InputDate: React.FC<Props> = ({ value, onValueChange }) => {
-  const [isEdit, setIsEdit] = useState<boolean>(!value);
+const InputDate: React.FC<Props> = ({
+  value,
+  isEdit,
+  setIsEdit,
+  onValueChange,
+}) => {
   const ref = useInputEditStatus({
     isEdit,
     setIsEdit,

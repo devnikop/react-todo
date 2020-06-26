@@ -17,16 +17,13 @@ export interface TaskType {
 export interface TaskEditType {
   deadline: string;
   description: string;
+  group: Group;
+  id: string;
   title: string;
 }
 
-export interface TaskTypeExt extends TaskEditType {
-  group: Group;
-  id: string;
-}
-
 export type IState = {
-  tasks: Array<TaskTypeExt>;
+  tasks: Array<TaskEditType>;
 };
 
 const initialState: IState = {
@@ -104,11 +101,7 @@ const initialState: IState = {
   ],
 };
 
-type State = {
-  tasks: TaskTypeExt[];
-};
-
-const addTask: CaseReducer<State, PayloadAction<TaskTypeExt>> = (
+const addTask: CaseReducer<IState, PayloadAction<TaskEditType>> = (
   state,
   action
 ) => ({
@@ -116,7 +109,7 @@ const addTask: CaseReducer<State, PayloadAction<TaskTypeExt>> = (
   tasks: state.tasks.concat(action.payload),
 });
 
-const deleteTask: CaseReducer<State, PayloadAction<string>> = (
+const deleteTask: CaseReducer<IState, PayloadAction<string>> = (
   state,
   action
 ) => ({
@@ -124,11 +117,51 @@ const deleteTask: CaseReducer<State, PayloadAction<string>> = (
   tasks: state.tasks.filter((task) => task.id !== action.payload),
 });
 
+const updateTitle: CaseReducer<
+  IState,
+  PayloadAction<{ id: string; title: string }>
+> = (state, action) => {
+  const { id, title } = action.payload;
+  const taskId = state.tasks.findIndex((task) => task.id === id);
+  state.tasks[taskId].title = title;
+};
+
+const updateDate: CaseReducer<
+  IState,
+  PayloadAction<{ id: string; date: string }>
+> = (state, action) => {
+  const { id, date } = action.payload;
+  const taskId = state.tasks.findIndex((task) => task.id === id);
+  state.tasks[taskId].deadline = date;
+};
+
+const updateDescription: CaseReducer<
+  IState,
+  PayloadAction<{ id: string; description: string }>
+> = (state, action) => {
+  const { id, description } = action.payload;
+  const taskId = state.tasks.findIndex((task) => task.id === id);
+  state.tasks[taskId].description = description;
+};
+
+const updateGroup: CaseReducer<
+  IState,
+  PayloadAction<{ id: string; group: Group }>
+> = (state, action) => {
+  const { id, group } = action.payload;
+  const taskId = state.tasks.findIndex((task) => task.id === id);
+  state.tasks[taskId].group = group;
+};
+
 export const tasks = createSlice({
   name: "tasks",
   initialState,
   reducers: {
     addTask,
     deleteTask,
+    updateTitle,
+    updateDate,
+    updateDescription,
+    updateGroup,
   },
 });

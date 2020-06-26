@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 
-import { tasks, TaskTypeExt } from "../../state/task";
+import { tasks, TaskEditType } from "../../state/task";
 
 import Task from "../Task/Task";
 import TaskEdit from "../TaskEdit/TaskEdit";
 
 type Props = {
-  task: TaskTypeExt;
+  task: TaskEditType;
 };
 
 const TaskWrapper: React.FC<Props> = ({ task }) => {
@@ -28,9 +28,7 @@ const TaskWrapper: React.FC<Props> = ({ task }) => {
 
   return isEdit ? (
     <TaskEdit
-      deadline={task.deadline}
-      description={task.description}
-      title={task.title}
+      task={task}
       onDeleteClick={handleDeleteClick}
       onLeaveClick={handleLeaveClick}
     />
