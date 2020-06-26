@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 import { resetList } from "../../styles/mixins";
-import { TaskTypeExt } from "../../state/task";
+import { TaskEditType } from "../../state/task";
 
 import TaskWrapper from "../TaskWrapper/TaskWrapper";
 
 type Props = {
-  tasks: Array<TaskTypeExt>;
+  tasks: Array<TaskEditType>;
 };
 
 const Tasks: React.FC<Props & { className?: string }> = ({

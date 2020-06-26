@@ -1,13 +1,14 @@
 import { nanoid } from "nanoid";
 import { useDispatch } from "react-redux";
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-import { ActionCreators, getRandomDeadline, Group } from "../../state/task";
+import { tasks, Group } from "../../state/task";
 import { getDefaultInput } from "../../styles/mixins";
 import { useInputEditStatus } from "../../helpers/useEditStatus";
+import { getRandomDeadline } from "../../helpers/helpers";
 
-const NewTask: FC = () => {
+const NewTask: React.FC<{ group: Group }> = ({ group }) => {
   const dispatch = useDispatch();
 
   const [isEdit, setIsEdit] = useState(false);
@@ -16,11 +17,11 @@ const NewTask: FC = () => {
 
   const addNewTask = (): void => {
     dispatch(
-      ActionCreators.addTask({
+      tasks.actions.addTask({
         id: nanoid(),
         deadline: getRandomDeadline(),
         description: ``,
-        group: Group.TODO,
+        group: group,
         title: taskTitle,
       })
     );

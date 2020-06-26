@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { resetTextarea } from "../../styles/mixins";
@@ -6,11 +6,17 @@ import { useTextareaEditStatus } from "../../helpers/useEditStatus";
 
 type Props = {
   value: string;
+  isEdit: boolean;
+  setIsEdit: (newValue: boolean) => void;
   onValueChange: (newValue: string) => void;
 };
 
-const TextareaDescription: React.FC<Props> = ({ value, onValueChange }) => {
-  const [isEdit, setIsEdit] = useState<boolean>(!value);
+const TextareaDescription: React.FC<Props> = ({
+  value,
+  isEdit,
+  setIsEdit,
+  onValueChange,
+}) => {
   const ref = useTextareaEditStatus({
     isEdit,
     setIsEdit,

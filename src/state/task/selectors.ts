@@ -1,10 +1,9 @@
 import { createSelector } from "reselect";
 
-import { Group } from "../../state/task/index";
+import { Group, TaskEditType } from "../../state/task/index";
 import { RootState } from "../../state/reducers";
-import { TaskTypeExt } from "../../state/task/index";
 
-type AllTasks = (state: RootState) => Array<TaskTypeExt>;
+type AllTasks = (state: RootState) => Array<TaskEditType>;
 
 const getAllTasks: AllTasks = (state) => state.taskReducer.tasks;
 

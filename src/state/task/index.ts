@@ -1,6 +1,7 @@
+import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
-import moment from "moment";
-import { ADD_TASK, DELETE_TASK } from "./types";
+
+import { getRandomDeadline } from "../../helpers/helpers";
 
 export enum Group {
   DOING = `DOING`,
@@ -16,23 +17,14 @@ export interface TaskType {
 export interface TaskEditType {
   deadline: string;
   description: string;
+  group: Group;
+  id: string;
   title: string;
 }
 
-export interface TaskTypeExt extends TaskEditType {
-  group: Group;
-  id: string;
-}
-
 export type IState = {
-  tasks: Array<TaskTypeExt>;
+  tasks: Array<TaskEditType>;
 };
-
-export const getRandomDeadline = (): string =>
-  moment()
-    .add(Math.round(Math.random() * 7), `d`)
-    .subtract(2, `d`)
-    .format(`D MMM`);
 
 const initialState: IState = {
   tasks: [
@@ -109,35 +101,67 @@ const initialState: IState = {
   ],
 };
 
-const ActionCreators = {
-  addTask: (task: TaskTypeExt) => ({
-    type: ADD_TASK,
-    payload: task,
-  }),
-  deleteTask: (id: string) => ({
-    type: DELETE_TASK,
-    payload: id,
-  }),
+const addTask: CaseReducer<IState, PayloadAction<TaskEditType>> = (
+  state,
+  action
+) => ({
+  ...state,
+  tasks: state.tasks.concat(action.payload),
+});
+
+const deleteTask: CaseReducer<IState, PayloadAction<string>> = (
+  state,
+  action
+) => ({
+  ...state,
+  tasks: state.tasks.filter((task) => task.id !== action.payload),
+});
+
+const updateTitle: CaseReducer<
+  IState,
+  PayloadAction<{ id: string; title: string }>
+> = (state, action) => {
+  const { id, title } = action.payload;
+  const taskId = state.tasks.findIndex((task) => task.id === id);
+  state.tasks[taskId].title = title;
 };
 
-const reducer = (
-  state = initialState,
-  action: { type: string; payload: any }
-) => {
-  switch (action.type) {
-    case ADD_TASK:
-      return {
-        ...state,
-        tasks: state.tasks.concat(action.payload),
-      };
-    case DELETE_TASK:
-      return {
-        ...state,
-        tasks: state.tasks.filter((task) => task.id !== action.payload),
-      };
-    default:
-      return state;
-  }
+const updateDate: CaseReducer<
+  IState,
+  PayloadAction<{ id: string; date: string }>
+> = (state, action) => {
+  const { id, date } = action.payload;
+  const taskId = state.tasks.findIndex((task) => task.id === id);
+  state.tasks[taskId].deadline = date;
 };
 
-export { ActionCreators, reducer };
+const updateDescription: CaseReducer<
+  IState,
+  PayloadAction<{ id: string; description: string }>
+> = (state, action) => {
+  const { id, description } = action.payload;
+  const taskId = state.tasks.findIndex((task) => task.id === id);
+  state.tasks[taskId].description = description;
+};
+
+const updateGroup: CaseReducer<
+  IState,
+  PayloadAction<{ id: string; group: Group }>
+> = (state, action) => {
+  const { id, group } = action.payload;
+  const taskId = state.tasks.findIndex((task) => task.id === id);
+  state.tasks[taskId].group = group;
+};
+
+export const tasks = createSlice({
+  name: "tasks",
+  initialState,
+  reducers: {
+    addTask,
+    deleteTask,
+    updateTitle,
+    updateDate,
+    updateDescription,
+    updateGroup,
+  },
+});
