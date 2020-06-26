@@ -37,13 +37,17 @@ const TasksGroup: React.FC<Props & { className?: string }> = ({
     <section className={className}>
       <h2 className="visually-hidden">{type} group</h2>
       {tasks.length ? <Tasks tasks={tasks} /> : ``}
-      <NewTask />
+      <NewTask group={tasks[0].group} />
     </section>
   );
 };
 
 const styledTasksGroup = styled(TasksGroup)`
+  min-width: 320px;
+  max-width: 400px;
+
   padding: 25px 15px;
+  box-sizing: border-box;
 
   background-color: ${Color.grey1};
   border-radius: 0 0 5px 5px;
